@@ -1,0 +1,24 @@
+Componentes_restantes:
+- sign_extend
+- extend_to_32bits
+- shift_left_2
+- load_size_control
+- store_size_control
+- div
+- mult
+- shift_16
+- not
+- or
+- and
+- mux_conSrc
+- mux_PCSrc
+- mux_IorD
+- mux_writeDataMemSrc
+- mux_HILO
+- mux_SRInput
+- mux_SRN
+
+===============================================
+
+FSM_restante:
+- tudo
