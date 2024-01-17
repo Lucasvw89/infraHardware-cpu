@@ -1,6 +1,6 @@
 Componentes_restantes:
-- sign_extend
-- extend_to_32bits
+ok - sign_extend
+??ok - extend_to_32bits
 - shift_left_2
 - load_size_control
 - store_size_control
