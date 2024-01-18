@@ -6,14 +6,11 @@ ok - sign_extend
 - store_size_control
 - div
 - mult
-- shift_16
-- not
-- or
-- and
+ok - shift_16
 - mux_conSrc
 - mux_PCSrc
-- mux_IorD
-- mux_writeDataMemSrc
+ok - mux_IorD
+ok - mux_writeDataMemSrc
 - mux_HILO
 - mux_SRInput
 - mux_SRN
