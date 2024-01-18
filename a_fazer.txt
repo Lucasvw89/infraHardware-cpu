@@ -7,7 +7,7 @@ ok - sign_extend
 - div
 - mult
 ok - shift_16
-- mux_conSrc
+ok - mux_conSrc
 - mux_PCSrc
 ok - mux_IorD
 ok - mux_writeDataMemSrc
