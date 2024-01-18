@@ -11,9 +11,9 @@ ok - shift_16
 - mux_PCSrc
 ok - mux_IorD
 ok - mux_writeDataMemSrc
-- mux_HILO
-- mux_SRInput
-- mux_SRN
+ok - mux_HILO
+ok - mux_SRInput
+incompleto - mux_SRN
 
 ===============================================
 
