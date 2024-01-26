@@ -1,9 +1,9 @@
 Componentes_restantes:
 ok - sign_extend
-??ok - extend_to_32bits
-- shift_left_2
-- load_size_control
-- store_size_control
+ok - extend_to_32bits
+ok - shift_left_2
+ok - load_size_control
+ok - store_size_control
 - div
 - mult
 ok - shift_16
@@ -13,7 +13,7 @@ ok - mux_IorD
 ok - mux_writeDataMemSrc
 ok - mux_HILO
 ok - mux_SRInput
-incompleto - mux_SRN
+ok - mux_SRN
 
 ===============================================
 
