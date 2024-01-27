@@ -18,6 +18,19 @@ ok - mux_SRN
 ===============================================
 
 FSM_restante:
+Coisas instancidas:
+ok - Regs (tudo que tem reg no nome)
+ok - Memoria
+ok - Ula
+- Div
+- Mult
+- store_size_control
+- load_size_control
+- shift_16
+- shift_left_2
+- sign_extend
+- Mux (tudo que tem mux no nome)
+
 - control_unit
 
 Instruções R:
