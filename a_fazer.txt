@@ -18,4 +18,43 @@ ok - mux_SRN
 ===============================================
 
 FSM_restante:
-- tudo
+
+Instruções R:
+- add
+- and
+- div
+- mult
+- jr
+- mfhi
+- mflo
+- sll
+- sllv
+- slt
+- sra
+- srav
+- srl
+- sub
+- break
+- rte
+- xchg
+
+Instruções I:
+- addi
+- addiu
+- beq
+- bne
+- ble
+- bgt
+- sram
+- lb
+- lh
+- lui
+- lw
+- sb
+- sh
+- slti
+- sw
+
+Instruções J:
+- j
+- jal
