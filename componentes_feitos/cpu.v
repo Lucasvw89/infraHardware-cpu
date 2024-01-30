@@ -45,7 +45,14 @@ module cpu (
   wire [31:0] SRInput;
   wire [31:0] SROut;
 
+  wire [31:0] ula_A_in;
+  wire [31:0] ula_B_in;
   wire [31:0] ULA_out;
+
+  wire [31:0] sign_extend_out;
+
+  wire [31:0] shift_left_2_mux_ula_b_out;
+  wire [31:0] shift_left_2_IR_out;
 
   // control wires:
   wire PC_write;
@@ -73,6 +80,9 @@ module cpu (
   wire [2:0] ShiftOP;
 
   wire [2:0] Seletor;
+
+  wire seletor_ulaA;
+  wire [1:0] seletor_ulaB;
 
   // flags:
   wire Overflow; // O
@@ -182,8 +192,8 @@ module cpu (
 
   // ULA
   ula32 ULA_(
-    A_out,
-    B_out,
+    ula_A_in,
+    ula_B_in,
     Seletor,
     ULA_out,
     Overflow,
@@ -195,6 +205,37 @@ module cpu (
   );
 
   // MUX
-    //
+    mux_ulaA MUX_ULA_A_(
+      seletor_ulaA,
+      PC_out,
+      A_out,
+      ula_A_in
+    );
+
+    mux_ulaB MUX_ULA_B_(
+      seletor_ulaB,
+      B_out,
+      ula_A_in,
+      // input const 4
+      sign_extend_out,
+      shift_left_2_mux_ula_b_out,
+      ula_B_in
+    );
+
+  // others:
+  sign_extend SIGN_EXTEND_(
+    IR_im,
+    sign_extend_out
+  );
+
+  shift_left_2 SHIFT_LEFT_2_MUX_ULA_B_(
+    sign_extend_out
+    shift_left_2_mux_ula_b_out
+  );
+
+  shift_left_2 SHIFT_LEFT_2_IR_(
+    {IR_rs, IR_rt, IR_im},
+    shift_left_2_IR_out
+  );
 
 endmodule
