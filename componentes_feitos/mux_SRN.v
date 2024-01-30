@@ -1,4 +1,4 @@
-module mux_SRN (  // incompleto
+module mux_SRN (
   input wire [1:0] SrNSrc,
   input wire [4:0] inFromShamt,
   input wire [4:0] inFromMem,
