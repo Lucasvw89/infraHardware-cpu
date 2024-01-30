@@ -21,7 +21,7 @@ module cpu (
   wire [31:0] LO_in;
   wire [31:0] LO_out;
 
-  wire [31:0] FLAG_REG_in;
+  wire [31:0] FLAG_REG_in;    // nao vou deletar ainda, mas acho q podemos
   wire [31:0] FLAG_REG_out;
 
   wire [31:0] IR_in;
@@ -69,20 +69,27 @@ module cpu (
 
   wire LO_write;
 
-  wire FLAG_REG_write;
+  wire FlagRegWrite;
 
   wire IRWrite;
 
+  // escrever no banco de registradores
   wire RegWrite;
 
+  // mandar escrever na memoria
   wire MemWrite;
 
+  // seletor de operacoes do Shift Register (SR)
   wire [2:0] ShiftOP;
 
+  // seletor de operacoes da ULA
   wire [2:0] Seletor;
 
+  // MUX CONTROL WIRES
   wire seletor_ulaA;
   wire [1:0] seletor_ulaB;
+
+  wire [4:0] RegDst;
 
   // flags:
   wire Overflow; // O
@@ -144,8 +151,8 @@ module cpu (
     Registrador FLAG_REG_(
       clk,
       reset,
-      FLAG_REG_write,
-      FLAG_REG_in,
+      FlagRegWrite,
+      {29'b0, Igual, Menor, Maior},
       FLAG_REG_out
     );
 
@@ -172,7 +179,7 @@ module cpu (
       ReadData2
     );
 
-    RegDesloc SR(
+    RegDesloc SR_(
       clk,
       reset,
       ShiftOP,
@@ -220,6 +227,13 @@ module cpu (
       sign_extend_out,
       shift_left_2_mux_ula_b_out,
       ula_B_in
+    );
+
+    mux_wrReg MUX_WRREG_(
+      RegDst,
+      IR_rt,
+      IR_im[15:11],
+      IR_rs
     );
 
   // others:
