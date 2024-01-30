@@ -54,6 +54,8 @@ module cpu (
   wire [31:0] shift_left_2_mux_ula_b_out;
   wire [31:0] shift_left_2_IR_out;
 
+  wire [31:0] shift_16_out;
+
   // control wires:
   wire PC_write;
 
@@ -89,7 +91,8 @@ module cpu (
   wire seletor_ulaA;
   wire [1:0] seletor_ulaB;
 
-  wire [4:0] RegDst;
+  wire [2:0] RegDst;
+  wire [3:0] MemtoReg;
 
   wire SrInputSrc;
   wire [1:0] SrNSrc;
@@ -239,6 +242,22 @@ module cpu (
       IR_rs
     );
 
+    // TODO completar esse mux com o load_size_control
+    mux_wrDataReg MUX_WRDATADATAREG_(
+      MemtoReg,
+      ULA_out,
+      MemData,
+      HI_out,
+      LO_out,
+      // load_size_control
+      SROut,
+      B_out,
+      shift_16_out,
+      A_out,
+      Menor,
+      WriteDataReg
+    );
+
     mux_SRInput MUX_SRINPUT_(
       SrInputSrc,
       B_out,
@@ -269,5 +288,10 @@ module cpu (
     {IR_rs, IR_rt, IR_im},
     shift_left_2_IR_out
   );
+
+  shift_16 SHIFT_16_(
+    IR_im,
+    shift_16_out
+  )
 
 endmodule
