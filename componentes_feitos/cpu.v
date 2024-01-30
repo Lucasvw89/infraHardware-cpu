@@ -91,6 +91,9 @@ module cpu (
 
   wire [4:0] RegDst;
 
+  wire SrInputSrc;
+  wire [1:0] SrNSrc;
+
   // flags:
   wire Overflow; // O
   wire Negativo; // N
@@ -234,6 +237,21 @@ module cpu (
       IR_rt,
       IR_im[15:11],
       IR_rs
+    );
+
+    mux_SRInput MUX_SRINPUT_(
+      SrInputSrc,
+      B_out,
+      A_out,
+      SRInput
+    );
+
+    mux_SRN MUX_SRN_(
+      SrNSrc,
+      IR_im[10:6],
+      MemData[4:0],
+      A_out[4:0],
+      B_out[4:0]
     );
 
   // others:
