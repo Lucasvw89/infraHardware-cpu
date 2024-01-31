@@ -268,7 +268,7 @@ module cpu (
     mux_writeDataMemSrc MUX_WRITEDATAMEMSRC_(
       SrctoMem,
       B_out,
-      store_size_control_out,   // TODO
+      store_size_control_out,
       WriteDataMem
     );
 
