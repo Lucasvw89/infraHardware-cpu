@@ -65,9 +65,6 @@ module cpu (
   wire A_write;
   wire B_write;
 
-  wire A_write;
-  wire B_write;
-
   wire EPC_write;
 
   wire HI_write;
@@ -294,7 +291,7 @@ module cpu (
   );
 
   shift_left_2 SHIFT_LEFT_2_MUX_ULA_B_(
-    sign_extend_out
+    sign_extend_out,
     shift_left_2_mux_ula_b_out
   );
 

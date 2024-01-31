@@ -10,8 +10,8 @@ module mux_IorD (
 
   assign out = (IorD == 0) ? 253 :
                (IorD == 1) ? 254 :
-               (iorD == 2) ? 255 :
-               (iorD == 3) ? inFromPC :
+               (IorD == 2) ? 255 :
+               (IorD == 3) ? inFromPC :
                inFromALU;
 
 endmodule

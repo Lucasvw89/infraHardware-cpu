@@ -4,7 +4,7 @@ module mux_SRN (
   input wire [4:0] inFromMem,
   input wire [4:0] inFromA,
   input wire [4:0] inFromB,
-  output wire [4:0] out,
+  output wire [4:0] out
 );
 
   assign out =  (SrNSrc == 0) ? inFromShamt:
