@@ -59,6 +59,8 @@ module cpu (
   wire [23:0] load_size_control_out;
   wire [31:0] store_size_control_out;
 
+  wire conSrc_out;
+
   // control wires:
   wire PC_write;
 
@@ -101,6 +103,10 @@ module cpu (
   wire store_size;
 
   wire SrctoMem;  // control wire to memory data source mux
+
+  wire [2:0] IorD;
+  wire [1:0] PCSource;
+  wire [1:0] conSrc;
 
   // flags:
   wire Overflow; // O
@@ -282,6 +288,31 @@ module cpu (
       MemData[4:0],
       A_out[4:0],
       B_out[4:0]
+    );
+
+    mux_IorD MUX_IORD_(
+      IorD,
+      PC_out,
+      ULA_out,
+      Address
+    );
+
+    mux_PcSrc MUX_PCSRC_(
+      PCSource,
+      ULA_out,
+      shift_left_2_IR_out,
+      load_size_control_out,
+      EPC_out,
+      PC_in
+    );
+
+    mux_conSrc MUX_CONSRC_(
+      conSrc,
+      FLAG_REG_out[2],
+      ~FLAG_REG_out[2],
+      FLAG_REG_out[2] | FLAG_REG_out[1],
+      FLAG_REG_out[0],
+      conSrc_out
     );
 
   // others:
