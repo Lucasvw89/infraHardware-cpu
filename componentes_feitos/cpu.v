@@ -56,11 +56,13 @@ module cpu (
 
   wire [31:0] shift_16_out;
 
+  wire [23:0] load_size_control_out;
+  wire [31:0] store_size_control_out;
+
+  wire conSrc_out;
+
   // control wires:
   wire PC_write;
-
-  wire A_write;
-  wire B_write;
 
   wire A_write;
   wire B_write;
@@ -96,6 +98,15 @@ module cpu (
 
   wire SrInputSrc;
   wire [1:0] SrNSrc;
+
+  wire [1:0] load_size;
+  wire store_size;
+
+  wire SrctoMem;  // control wire to memory data source mux
+
+  wire [2:0] IorD;
+  wire [1:0] PCSource;
+  wire [1:0] conSrc;
 
   // flags:
   wire Overflow; // O
@@ -199,8 +210,8 @@ module cpu (
     Address,
     clk,
     MemWrite,
-    WriteDataMem,
-    MemData
+    WriteDataMem, // datain
+    MemData       // dataout
   );
 
   // ULA
@@ -242,20 +253,26 @@ module cpu (
       IR_rs
     );
 
-    // TODO completar esse mux com o load_size_control
     mux_wrDataReg MUX_WRDATADATAREG_(
       MemtoReg,
       ULA_out,
       MemData,
       HI_out,
       LO_out,
-      // load_size_control
+      load_size_control_out,
       SROut,
       B_out,
       shift_16_out,
       A_out,
       Menor,
       WriteDataReg
+    );
+
+    mux_writeDataMemSrc MUX_WRITEDATAMEMSRC_(
+      SrctoMem,
+      B_out,
+      store_size_control_out,
+      WriteDataMem
     );
 
     mux_SRInput MUX_SRINPUT_(
@@ -273,6 +290,31 @@ module cpu (
       B_out[4:0]
     );
 
+    mux_IorD MUX_IORD_(
+      IorD,
+      PC_out,
+      ULA_out,
+      Address
+    );
+
+    mux_PcSrc MUX_PCSRC_(
+      PCSource,
+      ULA_out,
+      shift_left_2_IR_out,
+      load_size_control_out,
+      EPC_out,
+      PC_in
+    );
+
+    mux_conSrc MUX_CONSRC_(
+      conSrc,
+      FLAG_REG_out[2],
+      ~FLAG_REG_out[2],
+      FLAG_REG_out[2] | FLAG_REG_out[1],
+      FLAG_REG_out[0],
+      conSrc_out
+    );
+
   // others:
   sign_extend SIGN_EXTEND_(
     IR_im,
@@ -280,7 +322,7 @@ module cpu (
   );
 
   shift_left_2 SHIFT_LEFT_2_MUX_ULA_B_(
-    sign_extend_out
+    sign_extend_out,
     shift_left_2_mux_ula_b_out
   );
 
@@ -292,6 +334,19 @@ module cpu (
   shift_16 SHIFT_16_(
     IR_im,
     shift_16_out
-  )
+  );
+
+  load_size_control LOAD_SIZE_CONTROL_(
+    load_size,
+    MemData,
+    load_size_control_out
+  );
+
+  store_size_control STORE_SIZE_CONTROL_(
+    store_size,
+    B_out,
+    load_size_control_out,
+    store_size_control_out
+  );
 
 endmodule
