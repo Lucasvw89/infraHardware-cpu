@@ -1,10 +1,10 @@
-module mux_SRN (  // incompleto
+module mux_SRN (
   input wire [1:0] SrNSrc,
   input wire [4:0] inFromShamt,
-  input wire [31:0] inFromMem,
+  input wire [4:0] inFromMem,
   input wire [4:0] inFromA,
   input wire [4:0] inFromB,
-  output wire [4:0] out,
+  output wire [4:0] out
 );
 
   assign out =  (SrNSrc == 0) ? inFromShamt:
