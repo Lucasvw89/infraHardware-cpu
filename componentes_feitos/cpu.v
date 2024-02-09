@@ -61,6 +61,12 @@ module cpu (
 
   wire conSrc_out;
 
+  wire [31:0] mult_hi_out;
+  wire [31:0] mult_lo_out;
+
+  wire [31:0] div_hi_out;
+  wire [31:0] div_lo_out;
+
   // control wires:
   wire PC_write;
 
@@ -108,6 +114,9 @@ module cpu (
   wire [1:0] PCSource;
   wire [1:0] conSrc;
   wire HiLoSrc;
+
+  wire mult_start;
+  wire div_start;
 
   // flags:
   wire Overflow; // O
@@ -317,11 +326,17 @@ module cpu (
     );
 
     mux_HILO MUX_HI_(
-      HiLoSrc,    //TODO
+      HiLoSrc,
+      div_hi_out,
+      mult_hi_out,
+      HI_in
     );
 
     mux_HILO MUX_LO_(
-      HiLoSrc,    //TODO
+      HiLoSrc,
+      div_lo_out,
+      mult_lo_out,
+      LO_in
     );
 
   // others:
@@ -356,6 +371,16 @@ module cpu (
     B_out,
     load_size_control_out,
     store_size_control_out
+  );
+
+  mult MULT_(
+    A_out,
+    B_out,
+    clk,
+    mult_start,
+    reset,
+    mult_hi_out,
+    mult_lo_out
   );
 
 endmodule
