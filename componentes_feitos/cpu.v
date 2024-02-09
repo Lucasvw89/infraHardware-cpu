@@ -107,6 +107,7 @@ module cpu (
   wire [2:0] IorD;
   wire [1:0] PCSource;
   wire [1:0] conSrc;
+  wire HiLoSrc;
 
   // flags:
   wire Overflow; // O
@@ -313,6 +314,14 @@ module cpu (
       FLAG_REG_out[2] | FLAG_REG_out[1],
       FLAG_REG_out[0],
       conSrc_out
+    );
+
+    mux_HILO MUX_HI_(
+      HiLoSrc,    //TODO
+    );
+
+    mux_HILO MUX_LO_(
+      HiLoSrc,    //TODO
     );
 
   // others:
