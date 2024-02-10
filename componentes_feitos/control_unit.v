@@ -10,6 +10,8 @@ module control_unit (
   input wire Igual, // EG
   input wire Maior, // GT
   input wire Menor, // LT
+  input wire invalid_opcode,
+  input wire divzero,
 
   // Opcode
   input wire [5:0] OPCODE,
@@ -161,12 +163,12 @@ module control_unit (
   parameter opcode_j = 6'b000010;
   parameter opcode_jal = 6'b000011;
 
-  // reset state:
+  // reset STATE:
   parameter ST_reset = 6'b111111;
-  //common states
+  //common STATEs
   parameter ST_fetch = 6'b000001;
   parameter ST_decode = 6'b000010;
-  // error handling states
+  // error handling STATEs
   parameter ST_invalid_opcode = 6'b000011;
   parameter ST_overflow = 6'b000100;
   parameter ST_divzero = 6'b000101;
@@ -191,16 +193,32 @@ module control_unit (
         MemWrite = 0;    
         ShiftOP = 0;     
         Seletor = 0;     
+        mult_start = 0; 
+        div_start = 0;  
+        load_size = 0;
+        store_size = 0;
+
+        seletor_ulaA = 0;
+        seletor_ulaB = 0;
+        RegDst = 0;   
+        MemtoReg = 0; 
+        SrInputSrc = 0;
+        SrNSrc = 0;
+        SrctoMem = 0;
+        IorD = 0;     
+        PCSource = 0; 
+        conSrc = 0;   
+        HiLoSrc = 0;
 
         reset_out = 1;
 
-        counter = 0;
+        COUNTER = 0;
 
         // reset na pilha
         // TODO
 
       end else begin
-        STATE = ST_common;
+        STATE = ST_fetch;
         PC_write = 0;    
         A_write = 0;     
         B_write = 0;     
@@ -213,16 +231,65 @@ module control_unit (
         MemWrite = 0;    
         ShiftOP = 0;     
         Seletor = 0;     
+        mult_start = 0; 
+        div_start = 0;  
+        load_size = 0;
+        store_size = 0;
 
-        reset_out = 0;
+        seletor_ulaA = 0;
+        seletor_ulaB = 0;
+        RegDst = 0;   
+        MemtoReg = 0; 
+        SrInputSrc = 0;
+        SrNSrc = 0;
+        SrctoMem = 0;
+        IorD = 0;     
+        PCSource = 0; 
+        conSrc = 0;   
+        HiLoSrc = 0;
 
-        counter = 0;
+        reset_out = 1;
+
+        COUNTER = 0;
       end
     end
+    else begin
+      case (STATE)
+        ST_fetch: begin
+          PC_write = 0;    
+          A_write = 0;     
+          B_write = 0;     
+          EPC_write = 0;   
+          HI_write = 0;    
+          LO_write = 0;    
+          FlagRegWrite = 0;
+          IRWrite = 0;     
+          RegWrite = 0;    
+          MemWrite = 0;    
+          ShiftOP = 0;     
+          Seletor = 0;     
+          mult_start = 0; 
+          div_start = 0;  
+          load_size = 0;
+          store_size = 0;
 
-    case(STATE) begin
-      ADD:
-        if (counter == 0)
+          seletor_ulaA = 0;
+          seletor_ulaB = 0;
+          RegDst = 0;   
+          MemtoReg = 0; 
+          SrInputSrc = 0;
+          SrNSrc = 0;
+          SrctoMem = 0;
+          IorD = 0;     
+          PCSource = 0; 
+          conSrc = 0;   
+          HiLoSrc = 0;
+
+          reset_out = 1;
+
+          COUNTER = 0;
+        end
+      endcase
     end
   end
 
