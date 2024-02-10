@@ -1,11 +1,11 @@
 Componentes_restantes:
 ok - sign_extend
-??ok - extend_to_32bits
-- shift_left_2
-- load_size_control
-- store_size_control
+ok - extend_to_32bits
+ok - shift_left_2
+ok - load_size_control
+ok - store_size_control
 - div
-- mult
+ok - mult
 ok - shift_16
 ok - mux_conSrc
 ok - mux_PCSrc
@@ -13,9 +13,78 @@ ok - mux_IorD
 ok - mux_writeDataMemSrc
 ok - mux_HILO
 ok - mux_SRInput
-incompleto - mux_SRN
+ok - mux_SRN
 
 ===============================================
 
 FSM_restante:
-- tudo
+
+Coisas instancidas:
+ok - Regs (tudo que tem reg no nome)
+ok - Memoria
+ok - Ula
+- Div
+ok - Mult
+
+misc:
+ok - store_size_control
+ok - load_size_control
+ok - shift_16
+ok - shift_left_2
+ok - sign_extend
+
+mux:
+ok - mux_ulaA
+ok - mux_ulaB
+ok - mux_wrReg
+ok - mux_writeDataReg
+ok - mux_conSrc
+ok - mux_PCSrc
+ok - mux_IorD
+ok - mux_writeDataMemSrc
+ok - mux_HILO_HI
+ok - mux_HILO_LO
+ok - mux_SRInput
+ok - mux_SRN
+
+- control_unit
+
+Instruções R:
+- add
+- and
+- div
+- mult
+- jr
+- mfhi
+- mflo
+- sll
+- sllv
+- slt
+- sra
+- srav
+- srl
+- sub
+- break
+- rte
+- xchg
+
+Instruções I:
+- addi
+- addiu
+- beq
+- bne
+- ble
+- bgt
+- sram
+- lb
+- lh
+- lui
+- lw
+- sb
+- sh
+- slti
+- sw
+
+Instruções J:
+- j
+- jal
