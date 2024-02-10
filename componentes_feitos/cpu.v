@@ -95,6 +95,9 @@ module cpu (
   // seletor de operacoes da ULA
   wire [2:0] Seletor;
 
+  wire mult_start;
+  wire div_start;
+
   // MUX CONTROL WIRES
   wire seletor_ulaA;
   wire [1:0] seletor_ulaB;
@@ -114,9 +117,6 @@ module cpu (
   wire [1:0] PCSource;
   wire [1:0] conSrc;
   wire HiLoSrc;
-
-  wire mult_start;
-  wire div_start;
 
   // flags:
   wire Overflow; // O
@@ -396,6 +396,7 @@ module cpu (
     Menor, // LT
 
     IR_opcode,
+    IR_im[5:0],
 
     PC_write,     
     A_write,      
@@ -409,6 +410,10 @@ module cpu (
     MemWrite,
     ShiftOP,
     Seletor,
+    mult_start, 
+    div_start,  
+    load_size,
+    store_size,
 
     // mux control wires
     seletor_ulaA,
@@ -417,15 +422,11 @@ module cpu (
     MemtoReg, 
     SrInputSrc,
     SrNSrc,
-    load_size,
-    store_size,
     SrctoMem,
     IorD,     
     PCSource, 
     conSrc,   
     HiLoSrc,
-    mult_start, 
-    div_start,  
 
     reset
   );
