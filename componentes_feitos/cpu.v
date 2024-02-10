@@ -383,4 +383,51 @@ module cpu (
     mult_lo_out
   );
 
+  // control_unit
+  control_unit CTRL_UNIT_(
+    clk,
+    reset,
+
+    Overflow, // O
+    Negativo, // N
+    Zero,  // Z
+    Igual, // EG
+    Maior, // GT
+    Menor, // LT
+
+    IR_opcode,
+
+    PC_write,     
+    A_write,      
+    B_write,      
+    EPC_write,    
+    HI_write,     
+    LO_write,     
+    FlagRegWrite, 
+    IRWrite,      
+    RegWrite,
+    MemWrite,
+    ShiftOP,
+    Seletor,
+
+    // mux control wires
+    seletor_ulaA,
+    seletor_ulaB,
+    RegDst,   
+    MemtoReg, 
+    SrInputSrc,
+    SrNSrc,
+    load_size,
+    store_size,
+    SrctoMem,
+    IorD,     
+    PCSource, 
+    conSrc,   
+    HiLoSrc,
+    mult_start, 
+    div_start,  
+
+    reset
+  );
+
 endmodule
