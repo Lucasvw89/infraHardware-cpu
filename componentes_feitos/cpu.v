@@ -61,6 +61,12 @@ module cpu (
 
   wire conSrc_out;
 
+  wire [31:0] mult_hi_out;
+  wire [31:0] mult_lo_out;
+
+  wire [31:0] div_hi_out;
+  wire [31:0] div_lo_out;
+
   // control wires:
   wire PC_write;
 
@@ -89,6 +95,9 @@ module cpu (
   // seletor de operacoes da ULA
   wire [2:0] Seletor;
 
+  wire mult_start;
+  wire div_start;
+
   // MUX CONTROL WIRES
   wire seletor_ulaA;
   wire [1:0] seletor_ulaB;
@@ -107,6 +116,7 @@ module cpu (
   wire [2:0] IorD;
   wire [1:0] PCSource;
   wire [1:0] conSrc;
+  wire HiLoSrc;
 
   // flags:
   wire Overflow; // O
@@ -115,6 +125,7 @@ module cpu (
   wire Igual; // EG
   wire Maior; // GT
   wire Menor; // LT
+  wire divzero; // divisao por zero
 
   // Registradores
     Registrador PC_(
@@ -315,6 +326,20 @@ module cpu (
       conSrc_out
     );
 
+    mux_HILO MUX_HI_(
+      HiLoSrc,
+      div_hi_out,
+      mult_hi_out,
+      HI_in
+    );
+
+    mux_HILO MUX_LO_(
+      HiLoSrc,
+      div_lo_out,
+      mult_lo_out,
+      LO_in
+    );
+
   // others:
   sign_extend SIGN_EXTEND_(
     IR_im,
@@ -347,6 +372,75 @@ module cpu (
     B_out,
     load_size_control_out,
     store_size_control_out
+  );
+
+  mult MULT_(
+    A_out,
+    B_out,
+    clk,
+    mult_start,
+    reset,
+    mult_hi_out,
+    mult_lo_out
+  );
+
+  div DIV_(
+    B_out,
+    A_out,
+    clk,
+    div_start,
+    reset,
+    divzero,
+    div_hi_out,
+    div_lo_out
+  );
+
+  // control_unit
+  control_unit CTRL_UNIT_(
+    clk,
+    reset,
+
+    Overflow, // O
+    Negativo, // N
+    Zero,  // Z
+    Igual, // EG
+    Maior, // GT
+    Menor, // LT
+
+    IR_opcode,
+    IR_im[5:0],
+
+    PC_write,     
+    A_write,      
+    B_write,      
+    EPC_write,    
+    HI_write,     
+    LO_write,     
+    FlagRegWrite, 
+    IRWrite,      
+    RegWrite,
+    MemWrite,
+    ShiftOP,
+    Seletor,
+    mult_start, 
+    div_start,  
+    load_size,
+    store_size,
+
+    // mux control wires
+    seletor_ulaA,
+    seletor_ulaB,
+    RegDst,   
+    MemtoReg, 
+    SrInputSrc,
+    SrNSrc,
+    SrctoMem,
+    IorD,     
+    PCSource, 
+    conSrc,   
+    HiLoSrc,
+
+    reset
   );
 
 endmodule
