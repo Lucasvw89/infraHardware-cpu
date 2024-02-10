@@ -125,6 +125,7 @@ module cpu (
   wire Igual; // EG
   wire Maior; // GT
   wire Menor; // LT
+  wire divzero; // divisao por zero
 
   // Registradores
     Registrador PC_(
@@ -381,6 +382,17 @@ module cpu (
     reset,
     mult_hi_out,
     mult_lo_out
+  );
+
+  div DIV_(
+    B_out,
+    A_out,
+    clk,
+    div_start,
+    reset,
+    divzero,
+    div_hi_out,
+    div_lo_out
   );
 
   // control_unit

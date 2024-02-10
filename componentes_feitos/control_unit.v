@@ -69,8 +69,8 @@ module control_unit (
   output reg reset_out
 );
 
-  reg STATE; // TODO definir tamanho dessas variaveis
-  reg COUNTER;
+  reg [5:0] STATE; // TODO definir tamanho dessas variaveis
+  reg [5:0] COUNTER;
 
   // parameters:
   // R type instructions:
@@ -123,7 +123,7 @@ module control_unit (
   parameter jal = 6'b0;
 
   // reset state:
-  parameter reset = 6'b111111;
+  parameter ST_reset = 6'b111111;
 
   initial begin
     reset_out = 1'b1;
@@ -172,6 +172,11 @@ module control_unit (
 
         counter = 0;
       end
+    end
+
+    case(STATE) begin
+      ADD:
+        if (counter == 0)
     end
   end
 
