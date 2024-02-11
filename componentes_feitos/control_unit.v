@@ -758,6 +758,11 @@ module control_unit (
               load_size = 2'b0;
               store_size = 1'b0;
 
+               if (Overflow == 1'b1)begin
+                STATE = ST_overflow;
+              end
+        end
+
 
           ST_slt begin
               PC_write = 1'b0;    
@@ -792,10 +797,6 @@ module control_unit (
               reset_out = 1'b0; 
 
               STATE = ST_fetch;
-
-              if (Overflow == 1'b1)begin
-                STATE = ST_overflow;
-              end
           end
         ST_sub: begin
               STATE = ST_fetch;
