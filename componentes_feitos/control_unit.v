@@ -1717,7 +1717,7 @@ module control_unit (
           HiLoSrc = 1'b0;
 
           reset_out = 1'b0; 
-          STATE = ST_srav;
+          STATE = ST_srl;
           COUNTER = COUNTER + 1;
         end
         else begin
