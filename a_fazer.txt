@@ -76,12 +76,12 @@ ok - addiu
 - ble
 - bgt
 - sram
-- lb
-- lh
+ok - lb
+ok - lh
 ok - lui
-- lw
-- sb
-- sh
+ok - lw
+ok - sb
+ok - sh
 ok - slti
 ok - sw
 
