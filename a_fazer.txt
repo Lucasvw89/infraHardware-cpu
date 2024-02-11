@@ -4,7 +4,7 @@ ok - extend_to_32bits
 ok - shift_left_2
 ok - load_size_control
 ok - store_size_control
-- div
+ok - div
 ok - mult
 ok - shift_16
 ok - mux_conSrc
@@ -23,7 +23,7 @@ Coisas instancidas:
 ok - Regs (tudo que tem reg no nome)
 ok - Memoria
 ok - Ula
-- Div
+ok - Div
 ok - Mult
 
 misc:
