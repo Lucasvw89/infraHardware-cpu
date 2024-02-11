@@ -462,6 +462,8 @@ module control_unit (
 
               reset_out = 1'b0; 
               STATE = ST_fetch;
+        
+        
         end
 
         ST_mfhi: begin
@@ -496,6 +498,7 @@ module control_unit (
 
               reset_out = 1'b0; 
               STATE = ST_fetch;
+
         end
 
         ST_lui: begin
@@ -530,6 +533,7 @@ module control_unit (
 
               reset_out = 1'b0; 
               STATE = ST_fetch;
+        
         end
 
         ST_j: begin 
@@ -564,7 +568,9 @@ module control_unit (
 
               reset_out = 1'b0; 
               STATE = ST_fetch;
+
         end
+
 
         ST_jal: begin
               PC_write = 1'b1; //*   
