@@ -54,7 +54,7 @@ Instruções R:
 - and
 - div
 - mult
-- jr
+ok - jr
 - mfhi
 - mflo
 - sll
@@ -64,8 +64,8 @@ Instruções R:
 - srav
 - srl
 - sub
-- break
-- rte
+ok - break
+ok - rte
 - xchg
 
 Instruções I:
@@ -83,7 +83,7 @@ Instruções I:
 - sb
 - sh
 - slti
-- sw
+ok - sw
 
 Instruções J:
 - j
