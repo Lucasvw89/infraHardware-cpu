@@ -75,9 +75,15 @@ ok - beq
 ok - bne
 ok - ble
 ok - bgt
+<<<<<<< HEAD
+- sram
+- lb
+- lh
+=======
 ok - sram
 ok - lb
 ok - lh
+>>>>>>> origin
 ok - lui
 ok - lw
 ok - sb
