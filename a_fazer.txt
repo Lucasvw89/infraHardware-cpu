@@ -53,7 +53,7 @@ Instruções R:
 ok - add 
 ok - and
 - div
-- mult
+ok - mult
 ok - jr
 ok - mfhi
 ok - mflo
