@@ -279,7 +279,7 @@ module control_unit (
 
             seletor_ulaA = 1'b0;
             seletor_ulaB = 2'b0;
-            RegDst = 3'b0;   
+            RegDst = 4'b0;   
             MemtoReg = 4'b0; 
             SrInputSrc = 1'b0;
             SrNSrc = 3'b0;
@@ -417,8 +417,38 @@ module control_unit (
             opcode_j: begin
               STATE = ST_j;
             end
-            opcode_jal: begin
-              STATE = ST_jal;
+            ST_jal: begin
+              STATE = ST_fetch;
+              PC_write = 1'b1; //*   
+              A_write = 1'b0;     
+              B_write = 1'b0;     
+              EPC_write = 1'b0;   
+              HI_write = 1'b0;    
+              LO_write = 1'b0;    
+              FlagRegWrite = 1'b0;
+              IRWrite = 1'b0;     
+              RegWrite = 1'b1;  //*  
+              MemWrite = 1'b0;   
+              ShiftOP = 0;     
+              Seletor = 3'b0;     
+              mult_start = 1'b0; 
+              div_start = 1'b0;  
+              load_size = 2'b0;
+              store_size = 1'b0;
+
+              seletor_ulaA = 1'b0;
+              seletor_ulaB = 2'b0;
+              RegDst = 4'b0010; //*
+              MemtoReg = 4'b0; 
+              SrInputSrc = 1'b0;
+              SrNSrc = 3'b0;
+              SrctoMem = 0;
+              IorD = 3'b000; 
+              PCSource = 2'b01; //*
+              conSrc = 0;   
+              HiLoSrc = 1'b0;
+
+              reset_out = 1'b0; 
             end
 
             default: invalid_opcode;
