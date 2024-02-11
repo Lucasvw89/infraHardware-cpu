@@ -52,17 +52,17 @@ ok - mux_SRN
 Instruções R:
 ok - add 
 ok - and
-- div
+ok - div
 ok - mult
 ok - jr
 ok - mfhi
 ok - mflo
-- sll
-- sllv
+ok - sll
+ok - sllv
 ok - slt
-- sra
-- srav
-- srl
+ok - sra
+ok - srav
+ok - srl
 ok - sub
 ok - break
 ok - rte
@@ -75,16 +75,22 @@ ok - beq
 ok - bne
 ok - ble
 ok - bgt
+<<<<<<< HEAD
 - sram
 - lb
 - lh
+=======
+ok - sram
+ok - lb
+ok - lh
+>>>>>>> origin
 ok - lui
-- lw
-- sb
-- sh
+ok - lw
+ok - sb
+ok - sh
 ok - slti
 ok - sw
 
 Instruções J:
-ok - j ok
-ok - jal ok
+ok - j
+ok - jal
