@@ -758,7 +758,7 @@ module control_unit (
               load_size = 2'b0;
               store_size = 1'b0;
 
-<<<<<<< HEAD
+
           ST_slt begin
               PC_write = 1'b0;    
               A_write = 1'b0;     
@@ -781,12 +781,6 @@ module control_unit (
               seletor_ulaB = 2'b00; //*
               RegDst = 3'b001; //*
               MemtoReg = 4'b1010; //*
-=======
-              seletor_ulaA = 1'b1; //*
-              seletor_ulaB = 2'b00; //*
-              RegDst = 3'b001; //*
-              MemtoReg = 4'b0000; //* 
->>>>>>> 47bb8fcd1090785ab8501f4f4886663389ab467a
               SrInputSrc = 1'b0;
               SrNSrc = 3'b0;
               SrctoMem = 0;
@@ -796,9 +790,9 @@ module control_unit (
               HiLoSrc = 1'b0;
 
               reset_out = 1'b0; 
-<<<<<<< HEAD
+
               STATE = ST_fetch;
-=======
+
               if (Overflow == 1'b1)begin
                 STATE = ST_overflow;
               end
@@ -874,8 +868,48 @@ module control_unit (
                 STATE = ST_overflow;
               end
           end
->>>>>>> 47bb8fcd1090785ab8501f4f4886663389ab467a
-        
+
+        ST_xchg: begin
+              if (COUNTER == 1'b0)begin
+              PC_write = 1'b0;   
+              A_write = 1'b0;     
+              B_write = 1'b0;     
+              EPC_write = 1'b0;   
+              HI_write = 1'b0;    
+              LO_write = 1'b0;    
+              FlagRegWrite = 1'b0;
+              IRWrite = 1'b0;     
+              RegWrite = 1'b1;  //*  
+              MemWrite = 1'b0;   
+              ShiftOP = 0;     
+              Seletor = 3'b0;     
+              mult_start = 1'b0; 
+              div_start = 1'b0;  
+              load_size = 2'b0;
+              store_size = 1'b0;
+
+              seletor_ulaA = 1'b0;
+              seletor_ulaB = 2'b0;
+              RegDst = 3'b000; //*
+              MemtoReg = 4'b1001; //*
+              SrInputSrc = 1'b0;
+              SrNSrc = 3'b0;
+              SrctoMem = 0;
+              IorD = 3'b000; 
+              PCSource = 2'b00;
+              conSrc = 0;   
+              HiLoSrc = 1'b0;
+
+              reset_out = 1'b0;
+              COUNTER = COUNTER + 1;
+              STATE = ST_xchg; 
+              end else if (COUNTER == 1'b1) begin
+              STATE = ST_fetch;
+              RegDst = 3'b100; //*
+              MemtoReg = 4'b0111; //*
+              RegWrite = 1'b1;  //*
+              end
+          end
   
         end
 
