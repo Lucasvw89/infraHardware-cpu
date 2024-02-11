@@ -55,8 +55,8 @@ ok - add
 - div
 - mult
 - jr
-- mfhi
-- mflo
+- mfhi ok
+- mflo ok
 - sll
 - sllv
 - slt
@@ -86,5 +86,5 @@ ok - addiu
 - sw
 
 Instruções J:
-- j 
+- j ok
 - jal ok
