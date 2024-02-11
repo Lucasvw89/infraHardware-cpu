@@ -75,7 +75,7 @@ ok - addiu
 - bne
 - ble
 - bgt
-- sram
+ok - sram
 ok - lb
 ok - lh
 ok - lui
