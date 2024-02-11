@@ -87,4 +87,4 @@ Instruções I:
 
 Instruções J:
 - j
-- jal
+- jal ok

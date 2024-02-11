@@ -416,9 +416,20 @@ module control_unit (
 
             opcode_j: begin
               STATE = ST_j;
+
             end
             ST_jal: begin
-              STATE = ST_fetch;
+              STATE = ST_jal;
+            end
+
+            default: invalid_opcode;
+
+
+        endcase
+        end
+            
+        end
+        ST_jal: begin
               PC_write = 1'b1; //*   
               A_write = 1'b0;     
               B_write = 1'b0;     
@@ -449,16 +460,8 @@ module control_unit (
               HiLoSrc = 1'b0;
 
               reset_out = 1'b0; 
-            end
-
-            default: invalid_opcode;
-
-
-        endcase
-        end
-            
-        end
-
+              STATE = ST_fetch;
+          end
       
 
         
