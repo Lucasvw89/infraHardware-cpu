@@ -55,8 +55,8 @@ Instruções R:
 - div
 - mult
 - jr
-- mfhi
-- mflo
+- mfhi ok
+- mflo ok
 - sll
 - sllv
 - slt
@@ -86,5 +86,5 @@ Instruções I:
 - sw
 
 Instruções J:
-- j
+- j ok
 - jal ok
