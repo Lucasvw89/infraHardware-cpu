@@ -699,6 +699,150 @@ module control_unit (
           STATE = ST_fetch;
         end
 
+        ST_sll begin
+
+        if(COUNTER == 6'b0)begin
+
+          PC_write = 1'b0;   
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0;
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 3'b001; //*    
+          Seletor = 3'b0;     
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0;
+          seletor_ulaB = 2'b0;
+          RegDst = 3'b000;
+          MemtoReg = 4'b0000;
+          SrInputSrc = 1'b0; //*
+          SrNSrc = 3'b000; //*
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; 
+          conSrc = 0;   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_srav;
+          COUNTER = COUNTER + 1;
+        end
+        else begin
+          PC_write = 1'b0;   
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0;
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 3'b010; //*    
+          Seletor = 3'b0;     
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0;
+          seletor_ulaB = 2'b0;
+          RegDst = 3'b000;
+          MemtoReg = 4'b0000;
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b000;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; 
+          conSrc = 0;   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_shift_end;      
+        end
+      end
+
+        ST_sllv begin
+
+        if(COUNTER == 6'b0)begin
+
+          PC_write = 1'b0;   
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0;
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 3'b001; //*    
+          Seletor = 3'b0;     
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0;
+          seletor_ulaB = 2'b0;
+          RegDst = 3'b000;
+          MemtoReg = 4'b0000;
+          SrInputSrc = 1'b1; //*
+          SrNSrc = 3'b011; //*
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; 
+          conSrc = 0;   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_srav;
+          COUNTER = COUNTER + 1;
+        end
+        else begin
+          PC_write = 1'b0;   
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0;
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 3'b010; //*    
+          Seletor = 3'b0;     
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0;
+          seletor_ulaB = 2'b0;
+          RegDst = 3'b000;
+          MemtoReg = 4'b0000;
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b000;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; 
+          conSrc = 0;   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_shift_end;      
+        end
+      end 
+
         ST_slt: begin
           PC_write = 1'b0;    
           A_write = 1'b0;     
@@ -957,6 +1101,58 @@ module control_unit (
           STATE = ST_fetch;
         end
 
+        ST_sram: begin
+          if (COUNTER == 1'b0)begin
+            PC_write = 1'b0;   
+            A_write = 1'b0;     
+            B_write = 1'b0;     
+            EPC_write = 1'b0;   
+            HI_write = 1'b0;    
+            LO_write = 1'b0;    
+            FlagRegWrite = 1'b0;
+            IRWrite = 1'b0;     
+            RegWrite = 1'b0;  
+            MemWrite = 1'b0;
+            ShiftOP = 0;     
+            Seletor = 3'b001; //*     
+            mult_start = 1'b0; 
+            div_start = 1'b0;  
+            load_size = 2'b0;
+            store_size = 1'b0;
+
+            seletor_ulaA = 1'b1; //*
+            seletor_ulaB = 2'b10; //*
+            RegDst = 3'b000;
+            MemtoReg = 4'b0000;
+            SrInputSrc = 1'b0;
+            SrNSrc = 3'b0;
+            SrctoMem = 0;
+            IorD = 3'b100; //* 
+            PCSource = 2'b00;
+            conSrc = 0;   
+            HiLoSrc = 1'b0;
+
+            reset_out = 1'b0;
+            COUNTER = COUNTER + 1;
+            STATE = ST_sram; 
+          end else if (COUNTER == 2'b10) begin
+            STATE = ST_sram;
+            SrNSrc = 3'b001; //*
+            SrInputSrc = 1'b0; //*
+            ShiftOP = 3'b001; //*
+            COUNTER = COUNTER + 1;
+          end else if (COUNTER == 2'b11) begin
+            STATE = ST_sram;
+            ShiftOP = 3'b100; //*
+            COUNTER = COUNTER + 1;
+          end else if (COUNTER == 3'b100) begin
+            STATE = ST_fetch;
+            MemtoReg = 3'b110; //*
+            RegDst = 1'b0; //*
+            RegWrite = 1'b1; //*
+          end
+        end
+
         ST_lb: begin
           if (COUNTER == 1'b0)begin
             PC_write = 1'b0;   
@@ -1041,6 +1237,40 @@ module control_unit (
             load_size = 2'b01; //*
             RegDst = 1'b0; //*
           end
+        end
+
+        ST_lui: begin
+          PC_write = 1'b0;   
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0;
+          IRWrite = 1'b0;     
+          RegWrite = 1'b1;    //*
+          MemWrite = 1'b0;   
+          ShiftOP = 0;     
+          Seletor = 3'b0;     
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0;
+          seletor_ulaB = 2'b0;
+          RegDst = 3'b000; 
+          MemtoReg = 4'b1000; //*
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b0;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; 
+          conSrc = 0;   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_fetch;
         end
 
         ST_lw: begin
@@ -1169,40 +1399,6 @@ module control_unit (
             SrctoMem = 1'b1; //*
             MemWrite = 1'b1; //*
           end
-        end
-
-        ST_lui: begin
-          PC_write = 1'b0;   
-          A_write = 1'b0;     
-          B_write = 1'b0;     
-          EPC_write = 1'b0;   
-          HI_write = 1'b0;    
-          LO_write = 1'b0;    
-          FlagRegWrite = 1'b0;
-          IRWrite = 1'b0;     
-          RegWrite = 1'b1;    //*
-          MemWrite = 1'b0;   
-          ShiftOP = 0;     
-          Seletor = 3'b0;     
-          mult_start = 1'b0; 
-          div_start = 1'b0;  
-          load_size = 2'b0;
-          store_size = 1'b0;
-
-          seletor_ulaA = 1'b0;
-          seletor_ulaB = 2'b0;
-          RegDst = 3'b000; 
-          MemtoReg = 4'b1000; //*
-          SrInputSrc = 1'b0;
-          SrNSrc = 3'b0;
-          SrctoMem = 0;
-          IorD = 3'b000; 
-          PCSource = 2'b00; 
-          conSrc = 0;   
-          HiLoSrc = 1'b0;
-
-          reset_out = 1'b0; 
-          STATE = ST_fetch;
         end
 
         ST_slti: begin
@@ -1557,151 +1753,7 @@ module control_unit (
           reset_out = 1'b0; 
           STATE = ST_shift_end;      
         end
-      end
-
-      ST_sllv begin
-
-        if(COUNTER == 6'b0)begin
-
-          PC_write = 1'b0;   
-          A_write = 1'b0;     
-          B_write = 1'b0;     
-          EPC_write = 1'b0;   
-          HI_write = 1'b0;    
-          LO_write = 1'b0;    
-          FlagRegWrite = 1'b0;
-          IRWrite = 1'b0;     
-          RegWrite = 1'b0; 
-          MemWrite = 1'b0;   
-          ShiftOP = 3'b001; //*    
-          Seletor = 3'b0;     
-          mult_start = 1'b0; 
-          div_start = 1'b0;  
-          load_size = 2'b0;
-          store_size = 1'b0;
-
-          seletor_ulaA = 1'b0;
-          seletor_ulaB = 2'b0;
-          RegDst = 3'b000;
-          MemtoReg = 4'b0000;
-          SrInputSrc = 1'b1; //*
-          SrNSrc = 3'b011; //*
-          SrctoMem = 0;
-          IorD = 3'b000; 
-          PCSource = 2'b00; 
-          conSrc = 0;   
-          HiLoSrc = 1'b0;
-
-          reset_out = 1'b0; 
-          STATE = ST_srav;
-          COUNTER = COUNTER + 1;
-        end
-        else begin
-          PC_write = 1'b0;   
-          A_write = 1'b0;     
-          B_write = 1'b0;     
-          EPC_write = 1'b0;   
-          HI_write = 1'b0;    
-          LO_write = 1'b0;    
-          FlagRegWrite = 1'b0;
-          IRWrite = 1'b0;     
-          RegWrite = 1'b0; 
-          MemWrite = 1'b0;   
-          ShiftOP = 3'b010; //*    
-          Seletor = 3'b0;     
-          mult_start = 1'b0; 
-          div_start = 1'b0;  
-          load_size = 2'b0;
-          store_size = 1'b0;
-
-          seletor_ulaA = 1'b0;
-          seletor_ulaB = 2'b0;
-          RegDst = 3'b000;
-          MemtoReg = 4'b0000;
-          SrInputSrc = 1'b0;
-          SrNSrc = 3'b000;
-          SrctoMem = 0;
-          IorD = 3'b000; 
-          PCSource = 2'b00; 
-          conSrc = 0;   
-          HiLoSrc = 1'b0;
-
-          reset_out = 1'b0; 
-          STATE = ST_shift_end;      
-        end
-      end
-
-      ST_sll begin
-
-        if(COUNTER == 6'b0)begin
-
-          PC_write = 1'b0;   
-          A_write = 1'b0;     
-          B_write = 1'b0;     
-          EPC_write = 1'b0;   
-          HI_write = 1'b0;    
-          LO_write = 1'b0;    
-          FlagRegWrite = 1'b0;
-          IRWrite = 1'b0;     
-          RegWrite = 1'b0; 
-          MemWrite = 1'b0;   
-          ShiftOP = 3'b001; //*    
-          Seletor = 3'b0;     
-          mult_start = 1'b0; 
-          div_start = 1'b0;  
-          load_size = 2'b0;
-          store_size = 1'b0;
-
-          seletor_ulaA = 1'b0;
-          seletor_ulaB = 2'b0;
-          RegDst = 3'b000;
-          MemtoReg = 4'b0000;
-          SrInputSrc = 1'b0; //*
-          SrNSrc = 3'b000; //*
-          SrctoMem = 0;
-          IorD = 3'b000; 
-          PCSource = 2'b00; 
-          conSrc = 0;   
-          HiLoSrc = 1'b0;
-
-          reset_out = 1'b0; 
-          STATE = ST_srav;
-          COUNTER = COUNTER + 1;
-        end
-        else begin
-          PC_write = 1'b0;   
-          A_write = 1'b0;     
-          B_write = 1'b0;     
-          EPC_write = 1'b0;   
-          HI_write = 1'b0;    
-          LO_write = 1'b0;    
-          FlagRegWrite = 1'b0;
-          IRWrite = 1'b0;     
-          RegWrite = 1'b0; 
-          MemWrite = 1'b0;   
-          ShiftOP = 3'b010; //*    
-          Seletor = 3'b0;     
-          mult_start = 1'b0; 
-          div_start = 1'b0;  
-          load_size = 2'b0;
-          store_size = 1'b0;
-
-          seletor_ulaA = 1'b0;
-          seletor_ulaB = 2'b0;
-          RegDst = 3'b000;
-          MemtoReg = 4'b0000;
-          SrInputSrc = 1'b0;
-          SrNSrc = 3'b000;
-          SrctoMem = 0;
-          IorD = 3'b000; 
-          PCSource = 2'b00; 
-          conSrc = 0;   
-          HiLoSrc = 1'b0;
-
-          reset_out = 1'b0; 
-          STATE = ST_shift_end;      
-        end
-      end                        
+      end                       
 
         ST_shift_end begin
           PC_write = 1'b0;   
