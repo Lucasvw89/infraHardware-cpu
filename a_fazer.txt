@@ -50,7 +50,7 @@ ok - mux_SRN
 - control_unit
 
 Instruções R:
-- add
+- add 
 - and
 - div
 - mult
@@ -87,4 +87,4 @@ Instruções I:
 
 Instruções J:
 - j
-- jal
+- jal ok
