@@ -1662,137 +1662,160 @@ module control_unit (
 
           reset_out = 1'b0; 
           case(OPCODE)
-            opcode_beq:
-              PC_write = 1'b1; //*    
-              A_write = 1'b0;     
-              B_write = 1'b0;     
-              EPC_write = 1'b0;   
-              HI_write = 1'b0;    
-              LO_write = 1'b0;    
-              FlagRegWrite = 1'b0; //*
-              IRWrite = 1'b0;     
-              RegWrite = 1'b0; 
-              MemWrite = 1'b0;   
-              ShiftOP = 0;     
-              Seletor = 3'b001; //*
-              mult_start = 1'b0; 
-              div_start = 1'b0;  
-              load_size = 2'b0;
-              store_size = 1'b0;
+            opcode_beq: begin
+              STATE = ST_beq;
+            end
 
-              seletor_ulaA = 1'b0; //*
-              seletor_ulaB = 2'b11; //* 
-              RegDst = 3'b000;
-              MemtoReg = 4'b0;
-              SrInputSrc = 1'b0;
-              SrNSrc = 3'b0;
-              SrctoMem = 0;
-              IorD = 3'b000; 
-              PCSource = 2'b00; //*
-              conSrc = 2'b00; //*   
-              HiLoSrc = 1'b0;
+            opcode_bne: begin
+              STATE = ST_bne;
+            end
 
-              reset_out = 1'b0; 
-              STATE = ST_fetch;
+            opcode_ble: begin
+              STATE = ST_ble;
+            end
 
-              opcode_bne:
-              PC_write = 1'b1; //*    
-              A_write = 1'b0;     
-              B_write = 1'b0;     
-              EPC_write = 1'b0;   
-              HI_write = 1'b0;    
-              LO_write = 1'b0;    
-              FlagRegWrite = 1'b0; //*
-              IRWrite = 1'b0;     
-              RegWrite = 1'b0; 
-              MemWrite = 1'b0;   
-              ShiftOP = 0;     
-              Seletor = 3'b001; //*
-              mult_start = 1'b0; 
-              div_start = 1'b0;  
-              load_size = 2'b0;
-              store_size = 1'b0;
-
-              seletor_ulaA = 1'b0; //*
-              seletor_ulaB = 2'b11; //* 
-              RegDst = 3'b000;
-              MemtoReg = 4'b0;
-              SrInputSrc = 1'b0;
-              SrNSrc = 3'b0;
-              SrctoMem = 0;
-              IorD = 3'b000; 
-              PCSource = 2'b00; //*
-              conSrc = 2'b01; //*   
-              HiLoSrc = 1'b0;
-              reset_out = 1'b0; 
-              STATE = ST_fetch;
-
-            opcode_ble:
-              PC_write = 1'b1; //*    
-              A_write = 1'b0;     
-              B_write = 1'b0;     
-              EPC_write = 1'b0;   
-              HI_write = 1'b0;    
-              LO_write = 1'b0;    
-              FlagRegWrite = 1'b0; //*
-              IRWrite = 1'b0;     
-              RegWrite = 1'b0; 
-              MemWrite = 1'b0;   
-              ShiftOP = 0;     
-              Seletor = 3'b001; //*
-              mult_start = 1'b0; 
-              div_start = 1'b0;  
-              load_size = 2'b0;
-              store_size = 1'b0;
-
-              seletor_ulaA = 1'b0; //*
-              seletor_ulaB = 2'b11; //* 
-              RegDst = 3'b000;
-              MemtoReg = 4'b0;
-              SrInputSrc = 1'b0;
-              SrNSrc = 3'b0;
-              SrctoMem = 0;
-              IorD = 3'b000; 
-              PCSource = 2'b00; //*
-              conSrc = 2'b10; //*   
-              HiLoSrc = 1'b0;
-
-              reset_out = 1'b0; 
-              STATE = ST_fetch;
-
-            opcode_bgt:
-              PC_write = 1'b1; //*    
-              A_write = 1'b0;     
-              B_write = 1'b0;     
-              EPC_write = 1'b0;   
-              HI_write = 1'b0;    
-              LO_write = 1'b0;    
-              FlagRegWrite = 1'b0; //*
-              IRWrite = 1'b0;     
-              RegWrite = 1'b0; 
-              MemWrite = 1'b0;   
-              ShiftOP = 0;     
-              Seletor = 3'b001; //*
-              mult_start = 1'b0; 
-              div_start = 1'b0;  
-              load_size = 2'b0;
-              store_size = 1'b0;
-
-              seletor_ulaA = 1'b0; //*
-              seletor_ulaB = 2'b11; //* 
-              RegDst = 3'b000;
-              MemtoReg = 4'b0;
-              SrInputSrc = 1'b0;
-              SrNSrc = 3'b0;
-              SrctoMem = 0;
-              IorD = 3'b000; 
-              PCSource = 2'b00; //*
-              conSrc = 2'b11; //*   
-              HiLoSrc = 1'b0;
-
-              reset_out = 1'b0; 
-              STATE = ST_fetch;                            
+            opcode_bgt:begin
+              STATE = ST_bgt;
+            end
+                                      
           endcase
+        end
+
+        ST_beq: begin
+          PC_write = 1'b1; //*    
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0; //*
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 0;     
+          Seletor = 3'b001; //*
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0; //*
+          seletor_ulaB = 2'b11; //* 
+          RegDst = 3'b000;
+          MemtoReg = 4'b0;
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b0;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; //*
+          conSrc = 2'b00; //*   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_fetch;        
+        end
+
+        ST_bne: begin
+          PC_write = 1'b1; //*    
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0; //*
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 0;     
+          Seletor = 3'b001; //*
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0; //*
+          seletor_ulaB = 2'b11; //* 
+          RegDst = 3'b000;
+          MemtoReg = 4'b0;
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b0;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; //*
+          conSrc = 2'b01; //*   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_fetch;
+        end
+
+        ST_ble: begin
+          PC_write = 1'b1; //*    
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0; //*
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 0;     
+          Seletor = 3'b001; //*
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0
+
+          seletor_ulaA = 1'b0; //*
+          seletor_ulaB = 2'b11; //* 
+          RegDst = 3'b000;
+          MemtoReg = 4'b0;
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b0;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; //*
+          conSrc = 2'b10; //*   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_fetch;
+        
+        end
+
+        ST_bgt:begin
+          PC_write = 1'b1; //*    
+          A_write = 1'b0;     
+          B_write = 1'b0;     
+          EPC_write = 1'b0;   
+          HI_write = 1'b0;    
+          LO_write = 1'b0;    
+          FlagRegWrite = 1'b0; //*
+          IRWrite = 1'b0;     
+          RegWrite = 1'b0; 
+          MemWrite = 1'b0;   
+          ShiftOP = 0;     
+          Seletor = 3'b001; //*
+          mult_start = 1'b0; 
+          div_start = 1'b0;  
+          load_size = 2'b0;
+          store_size = 1'b0;
+
+          seletor_ulaA = 1'b0; //*
+          seletor_ulaB = 2'b11; //* 
+          RegDst = 3'b000;
+          MemtoReg = 4'b0;
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b0;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00; //*
+          conSrc = 2'b11; //*   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
+          STATE = ST_fetch;    
         end
 
       endcase
