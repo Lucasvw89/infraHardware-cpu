@@ -4,7 +4,7 @@ ok - extend_to_32bits
 ok - shift_left_2
 ok - load_size_control
 ok - store_size_control
-- div
+ok - div
 ok - mult
 ok - shift_16
 ok - mux_conSrc
@@ -23,7 +23,7 @@ Coisas instancidas:
 ok - Regs (tudo que tem reg no nome)
 ok - Memoria
 ok - Ula
-- Div
+ok - Div
 ok - Mult
 
 misc:
@@ -51,22 +51,22 @@ ok - mux_SRN
 
 Instruções R:
 ok - add 
-- and
+ok - and
 - div
 - mult
-- jr
-- mfhi ok
-- mflo ok
+ok - jr
+ok - mfhi
+ok - mflo
 - sll
 - sllv
-- slt
+ok - slt
 - sra
 - srav
 - srl
 ok - sub
-- break
-- rte
-- xchg
+ok - break
+ok - rte
+ok - xchg
 
 Instruções I:
 ok - addi
@@ -76,15 +76,15 @@ ok - addiu
 - ble
 - bgt
 - sram
-- lb
-- lh
-- lui ok
-- lw
-- sb
-- sh
-- slti
-- sw
+ok - lb
+ok - lh
+ok - lui
+ok - lw
+ok - sb
+ok - sh
+ok - slti
+ok - sw
 
 Instruções J:
-- j ok
-- jal ok
+ok - j ok
+ok - jal ok
