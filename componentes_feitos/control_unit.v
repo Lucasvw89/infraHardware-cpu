@@ -297,7 +297,7 @@ module control_unit (
             PCSource = 2'b00; //*
             seletor_ulaA = 1'b0; //*
             seletor_ulaB = 2'b01; //*
-            Seletor = 3'001; //*
+            Seletor = 3'b001; //*
             PC_write = 1'b1; //*
             
             STATE = ST_decode;
@@ -307,8 +307,8 @@ module control_unit (
           end
 
         else if(COUNTER == 6'b000100)begin
-            A_write == 1'b1; //*
-            B_write == 1'b1; //*
+            A_write = 1'b1; //*
+            B_write = 1'b1; //*
 
             case(OPCODE)
               opcode_r: begin
@@ -568,6 +568,7 @@ module control_unit (
           HiLoSrc = 1'b0;
 
           reset_out = 1'b0;
+        end
 
         ST_mflo: begin
           PC_write = 1'b0;   
@@ -764,7 +765,7 @@ module control_unit (
         end
 
 
-          ST_slt begin
+          ST_slt: begin
               PC_write = 1'b0;    
               A_write = 1'b0;     
               B_write = 1'b0;     
@@ -912,9 +913,8 @@ module control_unit (
               end
           end
   
-        end
 
-        ST_and begin
+        ST_and: begin
               PC_write = 1'b0;    
               A_write = 1'b0;     
               B_write = 1'b0;     
