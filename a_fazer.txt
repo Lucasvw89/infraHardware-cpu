@@ -78,7 +78,7 @@ Instruções I:
 - sram
 - lb
 - lh
-- lui
+- lui ok
 - lw
 - sb
 - sh
