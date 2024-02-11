@@ -71,10 +71,10 @@ ok - xchg
 Instruções I:
 ok - addi
 ok - addiu
-- beq
-- bne
-- ble
-- bgt
+ok - beq
+ok - bne
+ok - ble
+ok - bgt
 - sram
 - lb
 - lh
