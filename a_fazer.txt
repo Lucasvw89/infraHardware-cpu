@@ -50,27 +50,27 @@ ok - mux_SRN
 - control_unit
 
 Instruções R:
-- add 
+ok - add 
 - and
 - div
 - mult
 ok - jr
-- mfhi
-- mflo
+ok - mfhi
+ok - mflo
 - sll
 - sllv
 - slt
 - sra
 - srav
 - srl
-- sub
+ok - sub
 ok - break
 ok - rte
 - xchg
 
 Instruções I:
-- addi
-- addiu
+ok - addi
+ok - addiu
 - beq
 - bne
 - ble
@@ -86,5 +86,5 @@ Instruções I:
 ok - sw
 
 Instruções J:
-- j
+- j ok
 - jal ok
