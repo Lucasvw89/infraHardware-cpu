@@ -54,9 +54,9 @@ ok - add
 - and
 - div
 - mult
-- jr
-- mfhi ok
-- mflo ok
+ok - jr
+ok - mfhi
+ok - mflo
 - sll
 - sllv
 - slt
@@ -64,8 +64,8 @@ ok - add
 - srav
 - srl
 ok - sub
-- break
-- rte
+ok - break
+ok - rte
 - xchg
 
 Instruções I:
@@ -83,7 +83,7 @@ ok - addiu
 - sb
 - sh
 - slti
-- sw
+ok - sw
 
 Instruções J:
 - j ok
