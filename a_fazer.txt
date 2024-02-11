@@ -52,7 +52,7 @@ ok - mux_SRN
 Instruções R:
 ok - add 
 ok - and
-- div
+ok - div
 ok - mult
 ok - jr
 ok - mfhi
@@ -71,10 +71,10 @@ ok - xchg
 Instruções I:
 ok - addi
 ok - addiu
-- beq
-- bne
-- ble
-- bgt
+ok - beq
+ok - bne
+ok - ble
+ok - bgt
 ok - sram
 ok - lb
 ok - lh
