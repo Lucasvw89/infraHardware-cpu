@@ -436,6 +436,7 @@ module control_unit (
             end
             default: begin
               STATE = ST_invalid_opcode;
+              COUNTER = 0;
             end
 
           endcase
@@ -477,6 +478,7 @@ module control_unit (
 
           if (Overflow == 1'b1)begin
             STATE = ST_overflow;
+            COUNTER = 0;
           end
         end
 
@@ -520,6 +522,7 @@ module control_unit (
 
             if (divzero == 1) begin
               STATE = ST_divzero;
+              COUNTER = 0;
             end
 
             PC_write = 1'b0;
@@ -1188,6 +1191,7 @@ module control_unit (
 
           if (Overflow == 1'b1)begin
             STATE = ST_overflow;
+            COUNTER = 0;
           end
 
         end
@@ -1340,6 +1344,7 @@ module control_unit (
 
           if (Overflow == 1'b1)begin
             STATE = ST_overflow;
+            COUNTER = 0;
           end
 
         end
@@ -2075,6 +2080,7 @@ module control_unit (
 
             COUNTER = COUNTER + 1;
           end
+          COUNTER = 0;
         end
 
         ST_overflow: begin
@@ -2149,6 +2155,7 @@ module control_unit (
 
             COUNTER = COUNTER + 1;
           end
+          COUNTER = 0;
         end
 
         ST_divzero: begin
@@ -2223,6 +2230,7 @@ module control_unit (
 
             COUNTER = COUNTER + 1;
           end
+          COUNTER = 0;
         end
 
       endcase
