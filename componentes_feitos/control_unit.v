@@ -17,6 +17,9 @@ module control_unit (
   input wire [5:0] OPCODE,
   input wire [5:0] FUNCT,
 
+  // PC_write condition
+  input wire conSrc_out,
+
   // control wires
     output reg PC_write,
 
@@ -50,6 +53,8 @@ module control_unit (
 
     output reg [1:0] load_size,
     output reg store_size,
+
+    output reg writeCondition,
 
     // MUX CONTROL WIRES
       output reg seletor_ulaA,
@@ -185,6 +190,7 @@ module control_unit (
       if (STATE != ST_reset) begin    // de qualquer valor pro reset
         STATE = ST_reset;
         PC_write = 0;    
+        writeCondition = 0;
         A_write = 0;     
         B_write = 0;     
         EPC_write = 0;   
@@ -220,6 +226,7 @@ module control_unit (
       end else begin      // state reset reseta a pilha
         STATE = ST_fetch;
         PC_write = 0;    
+        writeCondition = 0;
         A_write = 0;     
         B_write = 0;     
         EPC_write = 0;   
@@ -261,6 +268,7 @@ module control_unit (
             STATE = ST_fetch; //*
 
             PC_write = 1'b0;    
+            writeCondition = 0;
             A_write = 1'b0;     
             B_write = 1'b0;     
             EPC_write = 1'b0;   
@@ -390,16 +398,16 @@ module control_unit (
               STATE = ST_addiu;
             end
             opcode_beq: begin
-              STATE = ST_beq;
+              STATE = ST_conditional_branch;
             end
             opcode_bne: begin
-              STATE = ST_bne;
+              STATE = ST_conditional_branch;
             end
             opcode_ble: begin
-              STATE = ST_ble;
+              STATE = ST_conditional_branch;
             end
             opcode_bgt: begin
-              STATE = ST_bgt;
+              STATE = ST_conditional_branch;
             end
             opcode_sram: begin
               STATE = ST_sram;
@@ -1379,7 +1387,8 @@ module control_unit (
         end
 
         ST_beq: begin
-          PC_write = 1'b1; //*    
+          PC_write = 1'b0; //*    
+          writeCondition = 1;
           A_write = 1'b0;     
           B_write = 1'b0;     
           EPC_write = 1'b0;   
@@ -1413,7 +1422,8 @@ module control_unit (
         end
 
         ST_bne: begin
-          PC_write = 1'b1; //*    
+          PC_write = 0; //*    
+          writeCondition = 1;
           A_write = 1'b0;     
           B_write = 1'b0;     
           EPC_write = 1'b0;   
@@ -1447,7 +1457,8 @@ module control_unit (
         end
 
         ST_ble: begin
-          PC_write = 1'b1; //*    
+          PC_write = 0; //*    
+          writeCondition = 1;
           A_write = 1'b0;     
           B_write = 1'b0;     
           EPC_write = 1'b0;   
@@ -1482,7 +1493,8 @@ module control_unit (
         end
 
         ST_bgt:begin
-          PC_write = 1'b1; //*    
+          PC_write = 0; //*    
+          writeCondition = 1;
           A_write = 1'b0;     
           B_write = 1'b0;     
           EPC_write = 1'b0;   
@@ -1878,7 +1890,7 @@ module control_unit (
           SrctoMem = 0;         //
           IorD = 3'b100;        //
           PCSource = 2'b00;
-          conSrc = 0;   
+          conSrc = 0;
           HiLoSrc = 1'b0;
 
           reset_out = 1'b0;
