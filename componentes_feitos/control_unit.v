@@ -1301,6 +1301,7 @@ module control_unit (
             RegDst = 3'b100; //*
             MemtoReg = 4'b0111; //*
             RegWrite = 1'b1;  //*
+            COUNTER = 0;
           end
         end
 
