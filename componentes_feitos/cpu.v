@@ -188,7 +188,7 @@ module cpu (
       clk,
       reset,
       IRWrite,
-      IR_in,
+      MemData,
       IR_opcode,
       IR_rs,
       IR_rt,
@@ -199,12 +199,12 @@ module cpu (
       clk,
       reset,
       RegWrite,
-      ReadReg1,
-      ReadReg2,
+      IR_rs,
+      IR_rt,
       WriteReg,
       WriteDataReg,
-      ReadData1,
-      ReadData2
+      A_in,
+      B_in
     );
 
     RegDesloc SR_(
@@ -250,7 +250,6 @@ module cpu (
     mux_ulaB MUX_ULA_B_(
       seletor_ulaB,
       B_out,
-      ula_A_in,
       // input const 4
       sign_extend_out,
       shift_left_2_mux_ula_b_out,
@@ -261,7 +260,8 @@ module cpu (
       RegDst,
       IR_rt,
       IR_im[15:11],
-      IR_rs
+      IR_rs,
+      WriteReg
     );
 
     mux_wrDataReg MUX_WRDATADATAREG_(
@@ -275,7 +275,7 @@ module cpu (
       B_out,
       shift_16_out,
       A_out,
-      Menor,
+      {{31'b0}, {Menor}},
       WriteDataReg
     );
 
@@ -298,7 +298,8 @@ module cpu (
       IR_im[10:6],
       MemData[4:0],
       A_out[4:0],
-      B_out[4:0]
+      B_out[4:0],
+      SRN
     );
 
     mux_IorD MUX_IORD_(
@@ -311,7 +312,7 @@ module cpu (
     mux_PcSrc MUX_PCSRC_(
       PCSource,
       ULA_out,
-      shift_left_2_IR_out,
+      {{PC_out[31:28]}, {shift_left_2_IR_out[27:0]}},
       load_size_control_out,
       EPC_out,
       PC_in
@@ -397,50 +398,52 @@ module cpu (
 
   // control_unit
   control_unit CTRL_UNIT_(
-    clk,
-    reset,
+    .clk(clk),
+    .reset(reset),
 
-    Overflow, // O
-    Negativo, // N
-    Zero,  // Z
-    Igual, // EG
-    Maior, // GT
-    Menor, // LT
+    .Overflow(Overflow), // O
+    .Negativo(Negativo), // N
+    .Zero(Zero),  // Z
+    .Igual(Igual), // EG
+    .Maior(Maior), // GT
+    .Menor(Menor), // LT
+    .invalid_opcode(invalid_opcode),
+    .divzero(divzero),
 
-    IR_opcode,
-    IR_im[5:0],
+    .OPCODE(IR_opcode),
+    .FUNCT(IR_im[5:0]),
 
-    PC_write,     
-    A_write,      
-    B_write,      
-    EPC_write,    
-    HI_write,     
-    LO_write,     
-    FlagRegWrite, 
-    IRWrite,      
-    RegWrite,
-    MemWrite,
-    ShiftOP,
-    Seletor,
-    mult_start, 
-    div_start,  
-    load_size,
-    store_size,
+    .PC_write(PC_write),     
+    .A_write(A_write),      
+    .B_write(B_write),      
+    .EPC_write(EPC_write),    
+    .HI_write(HI_write),     
+    .LO_write(LO_write),     
+    .FlagRegWrite(FlagRegWrite), 
+    .IRWrite(IRWrite),      
+    .RegWrite(RegWrite),
+    .MemWrite(MemWrite),
+    .ShiftOP(ShiftOP),
+    .Seletor(Seletor),
+    .mult_start(mult_start), 
+    .div_start(div_start),  
+    .load_size(load_size),
+    .store_size(store_size),
 
     // mux control wires
-    seletor_ulaA,
-    seletor_ulaB,
-    RegDst,   
-    MemtoReg, 
-    SrInputSrc,
-    SrNSrc,
-    SrctoMem,
-    IorD,     
-    PCSource, 
-    conSrc,   
-    HiLoSrc,
+    .seletor_ulaA(seletor_ulaA),
+    .seletor_ulaB(seletor_ulaB),
+    .RegDst(RegDst),   
+    .MemtoReg(MemtoReg), 
+    .SrInputSrc(SrInputSrc),
+    .SrNSrc(SrNSrc),
+    .SrctoMem(SrctoMem),
+    .IorD(IorD),     
+    .PCSource(PCSource), 
+    .conSrc(conSrc),   
+    .HiLoSrc(HiLoSrc),
 
-    reset
+   .reset_out(reset) 
   );
 
 endmodule

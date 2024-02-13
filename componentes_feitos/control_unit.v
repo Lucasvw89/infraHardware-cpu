@@ -177,10 +177,11 @@ module control_unit (
 
   initial begin
     reset_out = 1'b1;
+    STATE = ST_fetch;
   end
 
   always @ (posedge clk) begin
-    if (reset == 1'b1) begin
+    if (reset_out == 1'b1) begin
       if (STATE != ST_reset) begin    // de qualquer valor pro reset
         STATE = ST_reset;
         PC_write = 0;    
@@ -300,25 +301,32 @@ module control_unit (
             seletor_ulaB = 2'b01; //*
             Seletor = 3'b001; //*
             PC_write = 1'b1; //*
+            IRWrite = 1'b1; //* 
 
             COUNTER = COUNTER + 1;
           end
           else if(COUNTER == 6'b000011) begin
             STATE = ST_fetch;
 
-            IRWrite = 1'b1; //* 
+            IRWrite = 1'b0; //* 
+            PC_write = 1'b0; //*
+            A_write = 1'b1; //*
+            B_write = 1'b1; //*
 
             COUNTER = COUNTER + 1;
           end
 
         else if(COUNTER == 6'b000100)begin
-            A_write = 1'b1; //*
-            B_write = 1'b1; //*
-            COUNTER = 0;
+            A_write = 1'b0; //*
+            B_write = 1'b0; //*
+            COUNTER = 6'b0;
 
             case(OPCODE)
+
               opcode_r: begin
+
                 case(FUNCT)
+
                   funct_add: begin
                     STATE = ST_add;
                   end
@@ -374,6 +382,7 @@ module control_unit (
                 endcase
 
               end
+
             opcode_addi: begin
               STATE = ST_addi;
             end
@@ -419,15 +428,12 @@ module control_unit (
             opcode_sw: begin
               STATE = ST_sw;
             end
-
             opcode_j: begin
               STATE = ST_j;
-
             end
             ST_jal: begin
               STATE = ST_jal;
             end
-
             default: begin
               STATE = ST_invalid_opcode;
             end
@@ -454,6 +460,20 @@ module control_unit (
           div_start = 1'b0;  
           load_size = 2'b0;
           store_size = 1'b0;
+
+          seletor_ulaA = 1'b1; //*
+          seletor_ulaB = 2'b00; //*
+          RegDst = 3'b001; //*
+          MemtoReg = 4'b0; //*
+          SrInputSrc = 1'b0;
+          SrNSrc = 3'b0;
+          SrctoMem = 0;
+          IorD = 3'b000; 
+          PCSource = 2'b00;
+          conSrc = 0;   
+          HiLoSrc = 1'b0;
+
+          reset_out = 1'b0; 
 
           if (Overflow == 1'b1)begin
             STATE = ST_overflow;
@@ -534,7 +554,7 @@ module control_unit (
             reset_out = 1'b0; 
 
             COUNTER = COUNTER + 1;
-          end else if (COUNTER <= 33) begin
+          end else if (COUNTER < 32) begin
             STATE = ST_div;
             div_start = 1'b0;   //
             COUNTER = COUNTER + 1;
@@ -544,6 +564,8 @@ module control_unit (
             HiLoSrc = 1'b0;
             HI_write = 1'b1;
             LO_write = 1'b1;
+
+            COUNTER = 0;
           end
         end
 
@@ -575,23 +597,25 @@ module control_unit (
             SrNSrc = 3'b0;
             SrctoMem = 0;
             IorD = 3'b000; 
-            PCSource = 2'b01;
+            PCSource = 2'b00;
             conSrc = 0;   
-            HiLoSrc = 1'b0;
+            HiLoSrc = 1'b1;
 
             reset_out = 1'b0; 
 
             COUNTER = COUNTER + 1;
-          end else if (COUNTER <= 33) begin
+          end else if (COUNTER < 32) begin
             STATE = ST_mult;
             mult_start = 1'b0;  //
             COUNTER = COUNTER + 1;
           end else begin
             STATE = ST_fetch;
 
-            HiLoSrc = 1'b0;
+            HiLoSrc = 1'b1;
             HI_write = 1'b1;
             LO_write = 1'b1;
+
+            COUNTER = 0;
           end
         end
 
@@ -1125,6 +1149,8 @@ module control_unit (
 
           reset_out = 1'b0; 
           STATE = ST_fetch;
+
+          COUNTER = 0;
 
       end
 
@@ -1923,7 +1949,7 @@ module control_unit (
 
           reset_out = 1'b0; 
           STATE = ST_fetch;
-        end                       
+        end
 
         ST_conditional_branch: begin
           PC_write = 1'b0;    
@@ -1955,25 +1981,25 @@ module control_unit (
           conSrc = 0;   
           HiLoSrc = 1'b0;
 
-          reset_out = 1'b0; 
+          reset_out = 1'b0;
+
           case(OPCODE)
+
             opcode_beq: begin
               STATE = ST_beq;
             end
-
             opcode_bne: begin
               STATE = ST_bne;
             end
-
             opcode_ble: begin
               STATE = ST_ble;
             end
-
             opcode_bgt:begin
               STATE = ST_bgt;
             end
-                                      
+
           endcase
+
         end
 
         ST_invalid_opcode: begin
