@@ -118,6 +118,8 @@ module cpu (
   wire [1:0] conSrc;
   wire HiLoSrc;
 
+  wire writeCondition;
+
   // flags:
   wire Overflow; // O
   wire Negativo; // N
@@ -131,7 +133,7 @@ module cpu (
     Registrador PC_(
       clk,
       reset,
-      PC_write,
+      PC_write | (writeCondition & conSrc_out),
       PC_in,
       PC_out
     );
@@ -413,6 +415,8 @@ module cpu (
     .OPCODE(IR_opcode),
     .FUNCT(IR_im[5:0]),
 
+    .conSrc_out(conSrc_out),
+
     .PC_write(PC_write),     
     .A_write(A_write),      
     .B_write(B_write),      
@@ -429,6 +433,7 @@ module cpu (
     .div_start(div_start),  
     .load_size(load_size),
     .store_size(store_size),
+    .writeCondition(writeCondition),
 
     // mux control wires
     .seletor_ulaA(seletor_ulaA),
