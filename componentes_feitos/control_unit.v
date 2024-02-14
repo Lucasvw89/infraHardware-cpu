@@ -485,6 +485,7 @@ module control_unit (
 
           if (Overflow == 1'b1)begin
             STATE = ST_overflow;
+            COUNTER = 0;
           end
         end
 
@@ -526,10 +527,6 @@ module control_unit (
           if (COUNTER == 0) begin
             STATE = ST_div;
 
-            if (divzero == 1) begin
-              STATE = ST_divzero;
-            end
-
             PC_write = 1'b0;
             A_write = 1'b0;     
             B_write = 1'b0;     
@@ -562,10 +559,20 @@ module control_unit (
             reset_out = 1'b0; 
 
             COUNTER = COUNTER + 1;
+
+            if (divzero == 1) begin
+              STATE = ST_divzero;
+              COUNTER = 0;
+            end
+
           end else if (COUNTER < 32) begin
             STATE = ST_div;
             div_start = 1'b0;   //
             COUNTER = COUNTER + 1;
+            if (divzero == 1) begin
+              STATE = ST_divzero;
+              COUNTER = 0;
+            end
           end else begin
             STATE = ST_fetch;
 
@@ -2091,7 +2098,7 @@ module control_unit (
 
             reset_out = 1'b0;
 
-            COUNTER = COUNTER + 1;
+            COUNTER = 0;
           end
         end
 
@@ -2165,7 +2172,7 @@ module control_unit (
 
             reset_out = 1'b0;
 
-            COUNTER = COUNTER + 1;
+            COUNTER = 0;
           end
         end
 
@@ -2239,7 +2246,7 @@ module control_unit (
 
             reset_out = 1'b0;
 
-            COUNTER = COUNTER + 1;
+            COUNTER = 0;
           end
         end
 
