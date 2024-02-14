@@ -187,7 +187,7 @@ module control_unit (
 
   always @ (posedge clk) begin
     if (reset_out == 1'b1) begin
-      if (STATE != ST_reset) begin    // de qualquer valor pro reset
+      if (STATE !== ST_reset) begin    // de qualquer valor pro reset
         STATE = ST_reset;
         PC_write = 0;    
         writeCondition = 0;
@@ -439,7 +439,7 @@ module control_unit (
             opcode_j: begin
               STATE = ST_j;
             end
-            ST_jal: begin
+            opcode_jal: begin
               STATE = ST_jal;
             end
             default: begin
@@ -1528,7 +1528,7 @@ module control_unit (
         end
 
         ST_sram: begin
-          if (COUNTER == 1'b0)begin
+          if (COUNTER <= 1'b1)begin
             PC_write = 1'b0;   
             A_write = 1'b0;     
             B_write = 1'b0;     
@@ -1576,11 +1576,12 @@ module control_unit (
             MemtoReg = 3'b110; //*
             RegDst = 1'b0; //*
             RegWrite = 1'b1; //*
+            COUNTER = 0;
           end
         end
 
         ST_lb: begin
-          if (COUNTER == 1'b0)begin
+          if (COUNTER <= 1'b1)begin
             PC_write = 1'b0;   
             A_write = 1'b0;     
             B_write = 1'b0;     
@@ -1619,11 +1620,12 @@ module control_unit (
             MemtoReg = 4'b0101; //*
             load_size = 2'b00; //*
             RegDst = 1'b0; //*
+            COUNTER = 0;
           end
         end
 
         ST_lh: begin
-          if (COUNTER == 1'b0)begin
+          if (COUNTER <= 1'b1)begin
             PC_write = 1'b0;   
             A_write = 1'b0;     
             B_write = 1'b0;     
@@ -1662,6 +1664,7 @@ module control_unit (
             MemtoReg = 4'b0101; //*
             load_size = 2'b01; //*
             RegDst = 1'b0; //*
+            COUNTER = 0;
           end
         end
 
@@ -1700,7 +1703,7 @@ module control_unit (
         end
 
         ST_lw: begin
-          if (COUNTER == 1'b0)begin
+          if (COUNTER <= 1'b1)begin
             PC_write = 1'b0;   
             A_write = 1'b0;     
             B_write = 1'b0;     
@@ -1738,11 +1741,12 @@ module control_unit (
             RegWrite = 1'b1;  //*
             MemtoReg = 4'b0001; //*
             RegDst = 1'b0; //*
+            COUNTER = 0;
           end
         end
 
         ST_sb: begin
-          if (COUNTER == 1'b0)begin
+          if (COUNTER <= 1'b1)begin
             PC_write = 1'b0;   
             A_write = 1'b0;     
             B_write = 1'b0;     
@@ -1781,11 +1785,12 @@ module control_unit (
             store_size = 1'b0; //*
             SrctoMem = 1'b1; //*
             MemWrite = 1'b1; //*
+            COUNTER = 0;
           end
         end
 
         ST_sh: begin
-          if (COUNTER == 1'b0)begin
+          if (COUNTER <= 1'b1)begin
             PC_write = 1'b0;   
             A_write = 1'b0;     
             B_write = 1'b0;     
@@ -1824,6 +1829,7 @@ module control_unit (
             store_size = 1'b1; //*
             SrctoMem = 1'b1; //*
             MemWrite = 1'b1; //*
+            COUNTER = 0;
           end
         end
 

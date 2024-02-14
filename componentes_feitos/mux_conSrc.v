@@ -4,7 +4,7 @@ module mux_conSrc (
   input wire notEqualTo,
   input wire lessThanOrEq,
   input wire moreThan,
-  output wire [31:0] out
+  output wire out
 );
 
   assign out =  (conSrc == 0) ? equalTo :

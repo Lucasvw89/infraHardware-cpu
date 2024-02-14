@@ -272,7 +272,7 @@ module cpu (
       MemData,
       HI_out,
       LO_out,
-      load_size_control_out,
+      {{8'b0}, load_size_control_out},
       SROut,
       B_out,
       shift_16_out,
@@ -315,7 +315,7 @@ module cpu (
       PCSource,
       ULA_out,
       {{PC_out[31:28]}, {shift_left_2_IR_out[27:0]}},
-      load_size_control_out,
+      {{8'b0}, load_size_control_out},
       EPC_out,
       PC_in
     );
@@ -355,7 +355,7 @@ module cpu (
   );
 
   shift_left_2 SHIFT_LEFT_2_IR_(
-    {IR_rs, IR_rt, IR_im},
+    {6'b0, IR_rs, IR_rt, IR_im},
     shift_left_2_IR_out
   );
 
