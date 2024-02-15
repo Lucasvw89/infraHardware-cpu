@@ -118,6 +118,8 @@ module cpu (
   wire [1:0] conSrc;
   wire HiLoSrc;
 
+  wire writeCondition;
+
   // flags:
   wire Overflow; // O
   wire Negativo; // N
@@ -131,7 +133,7 @@ module cpu (
     Registrador PC_(
       clk,
       reset,
-      PC_write,
+      PC_write | (writeCondition & conSrc_out),
       PC_in,
       PC_out
     );
@@ -156,7 +158,7 @@ module cpu (
       clk,
       reset,
       EPC_write,
-      EPC_in,
+      ULA_out,
       EPC_out
     );
 
@@ -270,7 +272,7 @@ module cpu (
       MemData,
       HI_out,
       LO_out,
-      load_size_control_out,
+      {{8'b0}, load_size_control_out},
       SROut,
       B_out,
       shift_16_out,
@@ -313,7 +315,7 @@ module cpu (
       PCSource,
       ULA_out,
       {{PC_out[31:28]}, {shift_left_2_IR_out[27:0]}},
-      load_size_control_out,
+      {{8'b0}, load_size_control_out},
       EPC_out,
       PC_in
     );
@@ -353,7 +355,7 @@ module cpu (
   );
 
   shift_left_2 SHIFT_LEFT_2_IR_(
-    {IR_rs, IR_rt, IR_im},
+    {6'b0, IR_rs, IR_rt, IR_im},
     shift_left_2_IR_out
   );
 
@@ -413,6 +415,8 @@ module cpu (
     .OPCODE(IR_opcode),
     .FUNCT(IR_im[5:0]),
 
+    .conSrc_out(conSrc_out),
+
     .PC_write(PC_write),     
     .A_write(A_write),      
     .B_write(B_write),      
@@ -429,6 +433,7 @@ module cpu (
     .div_start(div_start),  
     .load_size(load_size),
     .store_size(store_size),
+    .writeCondition(writeCondition),
 
     // mux control wires
     .seletor_ulaA(seletor_ulaA),

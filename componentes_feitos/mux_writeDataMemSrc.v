@@ -5,6 +5,6 @@ module mux_writeDataMemSrc (
   output wire [31:0] out
 );
 
-  assign out = (WriteDataSrc == 1) ? inFromB : inFromStoreSizeControl;
+  assign out = (WriteDataSrc == 0) ? inFromB : inFromStoreSizeControl;
 
 endmodule
