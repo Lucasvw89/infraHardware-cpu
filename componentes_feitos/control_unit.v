@@ -301,6 +301,11 @@ module control_unit (
 
             COUNTER = COUNTER + 1;
 
+            if (Overflow == 1'b1)begin
+              STATE = ST_overflow;
+              COUNTER = 0;
+            end
+
           end else if(COUNTER == 6'b000010)begin
             STATE = ST_fetch;
 
@@ -483,10 +488,6 @@ module control_unit (
 
           reset_out = 1'b0; 
 
-          if (Overflow == 1'b1)begin
-            STATE = ST_overflow;
-            COUNTER = 0;
-          end
         end
 
         ST_and: begin
@@ -559,11 +560,6 @@ module control_unit (
             reset_out = 1'b0; 
 
             COUNTER = COUNTER + 1;
-
-            if (divzero == 1) begin
-              STATE = ST_divzero;
-              COUNTER = 0;
-            end
 
           end else if (COUNTER < 32) begin
             STATE = ST_div;

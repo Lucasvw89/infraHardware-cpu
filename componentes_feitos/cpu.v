@@ -158,7 +158,7 @@ module cpu (
       clk,
       reset,
       EPC_write,
-      EPC_in,
+      ULA_out,
       EPC_out
     );
 
