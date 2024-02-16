@@ -391,6 +391,9 @@ module control_unit (
                   funct_xchg: begin
                     STATE = ST_xchg;
                   end
+                  default: begin
+                    STATE = ST_invalid_opcode;
+                  end
 
                 endcase
 
