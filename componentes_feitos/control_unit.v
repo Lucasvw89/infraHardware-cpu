@@ -189,8 +189,8 @@ module control_unit (
     STATE = ST_fetch;
   end
 
-  always @ (posedge clk) begin
-    if (reset_out == 1'b1) begin
+  always @ (posedge clk, posedge reset) begin
+    if (reset == 1'b1 || reset_out == 1'b1) begin
       if (STATE !== ST_reset) begin    // de qualquer valor pro reset
         STATE = ST_reset;
         PC_write = 0;    
