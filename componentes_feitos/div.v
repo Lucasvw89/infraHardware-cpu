@@ -18,6 +18,10 @@ module div(
     reg sinalDividendo;
 
     always @(posedge clk) begin
+        if (divzero == 1'b1) begin
+          status = 1'b0;
+          divzero = 1'b0;
+        end
         if (start == 1'b1) begin
                 a = 32'b0;
                 dividendo = q;

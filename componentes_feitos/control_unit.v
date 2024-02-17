@@ -240,7 +240,7 @@ module control_unit (
         RegWrite = 1'b1;    //
         MemWrite = 0;    
         ShiftOP = 0;     
-        Seletor = 0;     
+        // Seletor = 0;     
         mult_start = 0; 
         div_start = 0;  
         load_size = 0;
@@ -282,7 +282,7 @@ module control_unit (
             RegWrite = 1'b0;    
             MemWrite = 1'b0; //*  
             ShiftOP = 0;     
-            Seletor = 3'b0;     
+            // Seletor = 3'b0;     
             mult_start = 1'b0; 
             div_start = 1'b0;  
             load_size = 2'b0;
@@ -2075,7 +2075,7 @@ module control_unit (
             PC_write = 1'b1;      //
             A_write = 1'b0;     
             B_write = 1'b0;     
-            EPC_write = 1'b1;
+            EPC_write = 1'b0;
             HI_write = 1'b0;    
             LO_write = 1'b0;    
             FlagRegWrite = 1'b0;
@@ -2149,7 +2149,7 @@ module control_unit (
             PC_write = 1'b1;      //
             A_write = 1'b0;     
             B_write = 1'b0;     
-            EPC_write = 1'b1;
+            EPC_write = 1'b0;
             HI_write = 1'b0;    
             LO_write = 1'b0;    
             FlagRegWrite = 1'b0;
