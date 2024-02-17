@@ -79,6 +79,9 @@ module control_unit (
   reg [5:0] STATE;
   reg [5:0] COUNTER;
 
+  // to deal with overflow
+  reg CAN_OVERFLOW;
+
   // parameters:
 
   // R type instructions:
@@ -237,7 +240,7 @@ module control_unit (
         RegWrite = 1'b1;    //
         MemWrite = 0;    
         ShiftOP = 0;     
-        Seletor = 0;     
+        // Seletor = 0;     
         mult_start = 0; 
         div_start = 0;  
         load_size = 0;
@@ -279,7 +282,7 @@ module control_unit (
             RegWrite = 1'b0;    
             MemWrite = 1'b0; //*  
             ShiftOP = 0;     
-            Seletor = 3'b0;     
+            // Seletor = 3'b0;     
             mult_start = 1'b0; 
             div_start = 1'b0;  
             load_size = 2'b0;
@@ -301,12 +304,14 @@ module control_unit (
 
             COUNTER = COUNTER + 1;
 
-            if (Overflow == 1'b1)begin
+            if (Overflow == 1'b1 && CAN_OVERFLOW == 1'b1)begin
               STATE = ST_overflow;
+              CAN_OVERFLOW = 0;
               COUNTER = 0;
             end
 
           end else if(COUNTER == 6'b000010)begin
+
             STATE = ST_fetch;
 
             PCSource = 2'b00; //*
@@ -317,6 +322,9 @@ module control_unit (
             IRWrite = 1'b1; //* 
 
             COUNTER = COUNTER + 1;
+
+            CAN_OVERFLOW = 0;
+
           end
           else if(COUNTER == 6'b000011) begin
             STATE = ST_fetch;
@@ -490,6 +498,8 @@ module control_unit (
           HiLoSrc = 1'b0;
 
           reset_out = 1'b0; 
+
+          CAN_OVERFLOW = 1'b1;
 
         end
 
@@ -1200,9 +1210,7 @@ module control_unit (
           HiLoSrc = 1'b0;
           reset_out = 1'b0; 
 
-          if (Overflow == 1'b1)begin
-            STATE = ST_overflow;
-          end
+          CAN_OVERFLOW = 1'b1;
 
         end
 
@@ -1352,9 +1360,7 @@ module control_unit (
 
           reset_out = 1'b0; 
 
-          if (Overflow == 1'b1)begin
-            STATE = ST_overflow;
-          end
+          CAN_OVERFLOW = 1'b1;
 
         end
 
@@ -2069,7 +2075,7 @@ module control_unit (
             PC_write = 1'b1;      //
             A_write = 1'b0;     
             B_write = 1'b0;     
-            EPC_write = 1'b1;
+            EPC_write = 1'b0;
             HI_write = 1'b0;    
             LO_write = 1'b0;    
             FlagRegWrite = 1'b0;
@@ -2143,7 +2149,7 @@ module control_unit (
             PC_write = 1'b1;      //
             A_write = 1'b0;     
             B_write = 1'b0;     
-            EPC_write = 1'b1;
+            EPC_write = 1'b0;
             HI_write = 1'b0;    
             LO_write = 1'b0;    
             FlagRegWrite = 1'b0;
@@ -2217,7 +2223,7 @@ module control_unit (
             PC_write = 1'b1;      //
             A_write = 1'b0;     
             B_write = 1'b0;     
-            EPC_write = 1'b1;
+            EPC_write = 1'b0;
             HI_write = 1'b0;    
             LO_write = 1'b0;    
             FlagRegWrite = 1'b0;
