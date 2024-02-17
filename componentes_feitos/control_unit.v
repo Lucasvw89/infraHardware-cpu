@@ -178,6 +178,7 @@ module control_unit (
   parameter ST_decode = 6'b000010;    // meio inutil aqui
   parameter ST_shift_end = 6'b101100;
   parameter ST_conditional_branch = 6'b101101;
+  parameter ST_calculateOverflow = 6'b101110;
   // error handling STATEs
   parameter ST_invalid_opcode = 6'b000011;
   parameter ST_overflow = 6'b000100;
@@ -240,7 +241,7 @@ module control_unit (
         RegWrite = 1'b1;    //
         MemWrite = 0;    
         ShiftOP = 0;     
-        // Seletor = 0;     
+        Seletor = 0;     
         mult_start = 0; 
         div_start = 0;  
         load_size = 0;
@@ -282,7 +283,7 @@ module control_unit (
             RegWrite = 1'b0;    
             MemWrite = 1'b0; //*  
             ShiftOP = 0;     
-            // Seletor = 3'b0;     
+            Seletor = 3'b000;     
             mult_start = 1'b0; 
             div_start = 1'b0;  
             load_size = 2'b0;
@@ -304,12 +305,7 @@ module control_unit (
 
             COUNTER = COUNTER + 1;
 
-            if (Overflow == 1'b1 && CAN_OVERFLOW == 1'b1)begin
-              STATE = ST_overflow;
-              CAN_OVERFLOW = 0;
-              COUNTER = 0;
-            end
-
+            
           end else if(COUNTER == 6'b000010)begin
 
             STATE = ST_fetch;
@@ -467,7 +463,6 @@ module control_unit (
         end
 
         ST_add: begin
-          STATE = ST_fetch;
           PC_write = 1'b0;  
           A_write = 1'b0;     
           B_write = 1'b0;     
@@ -499,7 +494,7 @@ module control_unit (
 
           reset_out = 1'b0; 
 
-          CAN_OVERFLOW = 1'b1;
+          STATE = ST_calculateOverflow;
 
         end
 
@@ -1179,7 +1174,6 @@ module control_unit (
       end
 
         ST_sub: begin
-          STATE = ST_fetch;
           PC_write = 1'b0;  
           A_write = 1'b0;     
           B_write = 1'b0;     
@@ -1210,7 +1204,7 @@ module control_unit (
           HiLoSrc = 1'b0;
           reset_out = 1'b0; 
 
-          CAN_OVERFLOW = 1'b1;
+          STATE = ST_calculateOverflow;
 
         end
 
@@ -1328,7 +1322,6 @@ module control_unit (
         end
 
         ST_addi: begin
-          STATE = ST_fetch;
           PC_write = 1'b0;  
           A_write = 1'b0;     
           B_write = 1'b0;     
@@ -1360,7 +1353,7 @@ module control_unit (
 
           reset_out = 1'b0; 
 
-          CAN_OVERFLOW = 1'b1;
+          STATE = ST_calculateOverflow;
 
         end
 
@@ -2252,6 +2245,15 @@ module control_unit (
             reset_out = 1'b0;
 
             COUNTER = 0;
+          end
+        end
+
+        ST_calculateOverflow: begin
+          if (Overflow == 1'b1) begin
+            STATE = ST_overflow;
+          end
+          else begin
+            STATE = ST_fetch;
           end
         end
 
